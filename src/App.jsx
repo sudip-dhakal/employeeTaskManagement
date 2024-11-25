@@ -1,27 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Login from "./Components/Login/Login";
 import EmployeeDashboard from "./Components/Dashboard/EmployeeDashboard";
 import CreateTask from "./Tasks/CreateTask";
 import AdminDashboard from "./Components/Dashboard/AdminDashboard";
-import { getLocalStorage, setLocalStorage } from "./Localstorage";
+import { AuthContext } from "./context/AuthProvider";
 
 const App = () => {
-  useEffect(() => {
-    setLocalStorage();
-  }, []);
+  const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    getLocalStorage();
-  }, []);
+  let handleLogin = (email, password, role) => {
+    if (email == "admin@gmail.com" && password == "123" && role == "admin") {
+      console.log("Yes this is admin");
+      setUser("admin");
+    } else if (
+      email == "employee@gmail.com" &&
+      password == "123" &&
+      role == "employee"
+    ) {
+      console.log("Yes this is employee");
+      setUser("employee");
+    } else {
+      console.log("Neither employee nor admin");
+      alert("Invalid credentials");
+    }
+  };
+
+  const data = useContext(AuthContext);
+  console.log(data);
 
   return (
     <>
-      <div className="bg-white h-screen flex justify-center items-center">
-        <Login />
-      </div>
-      {/* <EmployeeDashboard /> */}
-      {/* <CreateTask /> */}
-      {/* <AdminDashboard /> */}
+      {!user ? <Login handleLogin={handleLogin} /> : ""}
+      {user == "admin" ? (
+        <AdminDashboard />
+      ) : user == "employee" ? (
+        <EmployeeDashboard />
+      ) : (
+        ""
+      )}
     </>
   );
 };
