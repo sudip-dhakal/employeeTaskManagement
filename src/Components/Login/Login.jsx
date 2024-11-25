@@ -7,7 +7,7 @@ const Login = ({ handleLogin }) => {
   const [role, setRole] = useState("");
   const [valid, setValid] = useState(false);
 
-  console.log(username, password, role);
+  // console.log(username, password, role);
 
   let handleSubmit = (e) => {
     e.preventDefault();

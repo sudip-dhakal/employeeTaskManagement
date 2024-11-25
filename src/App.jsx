@@ -6,6 +6,8 @@ import AdminDashboard from "./Components/Dashboard/AdminDashboard";
 import { AuthContext } from "./context/AuthProvider";
 
 const App = () => {
+  const authData = useContext(AuthContext);
+  console.log(authData.empData)
   const [user, setUser] = useState(null);
 
   let handleLogin = (email, password, role) => {
@@ -24,9 +26,6 @@ const App = () => {
       alert("Invalid credentials");
     }
   };
-
-  const data = useContext(AuthContext);
-  console.log(data);
 
   return (
     <>
